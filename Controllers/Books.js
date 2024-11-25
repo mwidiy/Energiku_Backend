@@ -12,15 +12,18 @@ export const getBooks = async (req, res) => {
   }
 };
 
+
+
 // tambah data
 export const addBook = async (req, res) => {
-    const { nama, email, password } = req.body;
+    const {  nama, email, password } = req.body;
     try {
-      await query(`INSERT INTO login_user (nama, email, password) VALUES (?, ?)`, [
+      await query(`INSERT INTO login_user ( nama, email, password) VALUES ( ?, ?, ?)`, [
         nama,
         email,
         password
       ]);
+      console.log("Data yang diterima:", {  nama, email, password });
       return res.status(200).json({ msg: "data login ditambahkan" });
     } catch (error) {
       return res.status(500).json({ msg: "Terjadi kesalahan pada server" });
@@ -32,12 +35,13 @@ export const updateBook = async (req, res) => {
     const { id } = req.params;
     const { nama, email, password } = req.body;
     try {
-      await query(`UPDATE login_user SET nama = ?, author = ? WHERE id_books = ?`, [
+      await query(`UPDATE login_user SET nama = ?, email = ?, password = ? WHERE idlogin_user = ?`, [
         nama,
         email,
         password,
         id,
       ]);
+      console.log("Data yang didi:", { id});
       return res.status(200).json({ msg: "Data login diupdate" });
     } catch (error) {
       console.log(error);
@@ -50,7 +54,7 @@ export const updateBook = async (req, res) => {
 export const deleteBook = async (req, res) => {
     const { id } = req.params;
     try {
-      await query("DELETE FROM login_user WHERE id_books = ?", [id]);
+      await query("DELETE FROM login_user WHERE idlogin_user = ?", [id]);
       return res.status(200).json({ msg: "Data login Telah Di Hapus" });
     } catch (error) {
       console.log(error);
